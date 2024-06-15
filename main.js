@@ -4,15 +4,15 @@ const path = require('path');
 function createWindow() {
     // Create the browser window.
     let win = new BrowserWindow({
-        width: 200,
+        width: 250,
         height: 100,
-        frame: false, // Removes the top frame (title bar)
+        frame: false, 
+        alwaysOnTop: true, 
         webPreferences: {
             nodeIntegration: true,
         },
     });
 
-    // Load the local HTML file
     win.loadFile(path.join(__dirname, 'index.html'));
 }
 
