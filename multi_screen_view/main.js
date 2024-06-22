@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 let mainWindow;
-const captureInterval = 250; // Capture interval in milliseconds (e.g., 1000 ms = 1 second)
+const captureInterval = 500; // Capture interval in milliseconds (e.g., 1000 ms = 1 second)
 
 function createWindow() {
     mainWindow = new BrowserWindow({
