@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Screen View</title>
+    <style>
+        #screenshots {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .screenshot {
+            margin: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Multi-Screen View</h1>
+    <button id="start-capture-btn">Start Capture</button>
+    <button id="stop-capture-btn">Stop Capture</button>
+    <div id="screenshots"></div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        document.getElementById('start-capture-btn').addEventListener('click', () => {
+            ipcRenderer.send('start-capturing');
+        });
+
+        document.getElementById('stop-capture-btn').addEventListener('click', () => {
+            ipcRenderer.send('stop-capturing');
+        });
+
+        ipcRenderer.on('screenshots-captured', (event, imagePaths) => {
+            console.log('Received image paths:', imagePaths); // Log the received image paths
+            const screenshotsDiv = document.getElementById('screenshots');
+            screenshotsDiv.innerHTML = ''; // Clear previous images
+            imagePaths.forEach((imagePath) => {
+                const img = document.createElement('img');
+                img.src = imagePath + '?' + new Date().getTime(); // Prevent caching
+                img.className = 'screenshot';
+                img.style.width = '200px'; // Adjust as needed
+                screenshotsDiv.appendChild(img);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "robotjs": "^0.6.0",
+    "screenshot-desktop": "^1.15.0"
+  }
+}
