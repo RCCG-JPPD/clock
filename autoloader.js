@@ -1,11 +1,16 @@
 const { app, BrowserWindow, screen } = require('electron');
 const path = require('path');
 
+
+const clockHeight = 30*2;
+
+const clockWidth = 90*2;
+
 function createWindows() {
     const displays = screen.getAllDisplays();
 
-    const privateScreenNumber = 0;
-    const publicScreenNumber = 0;
+    const privateScreenNumber = 2;
+    const publicScreenNumber = 1;
 
 
     const secondDisplay = displays[publicScreenNumber];
@@ -20,8 +25,8 @@ function createWindows() {
     const thirdDisplayY = thirdDisplay.bounds.y + yposition;
 
     let privateWindow = new BrowserWindow({
-        width: 150,
-        height: 50,
+        width: clockWidth,
+        height: clockHeight,
         x: thirdDisplayX,
         y: thirdDisplayY,
         frame: false,
@@ -33,8 +38,8 @@ function createWindows() {
     });
 
     let publicWindow = new BrowserWindow({
-        width: 150,
-        height: 50,
+        width: clockWidth,
+        height: clockHeight,
         x: secondDisplayX,
         y: secondDisplayY,
         frame: false,
@@ -57,7 +62,7 @@ function createWindows() {
     setInterval(() => {
         bringToTop(privateWindow);
         bringToTop(publicWindow);
-    }, 100);
+    }, 100); // interval check in ms
 }
 
 app.whenReady().then(createWindows);

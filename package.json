@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "electron": "^31.0.1",
+    "robotjs": "^0.6.0"
+  }
+}

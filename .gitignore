@@ -133,7 +133,7 @@ dmypy.json
 node_modules/
 bower_components/
 jspm_packages/
-
+/node_modules/
 # Logs
 logs/
 *.log
