@@ -1,61 +1,68 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, screen } = require('electron');
 const path = require('path');
-const { setWindowOnTop } = require('./windows-api');
+
+
+const clockHeight = 30*2;
+
+const clockWidth = 90*2;
 
 function createWindows() {
+    const displays = screen.getAllDisplays();
+
+    const privateScreenNumber = 2;
+    const publicScreenNumber = 1;
+
+
+    const secondDisplay = displays[publicScreenNumber];
+    const thirdDisplay = displays[privateScreenNumber];
+
+    const xposition = 0;
+    const yposition = 0;
+
+    const secondDisplayX = secondDisplay.bounds.x + xposition;
+    const secondDisplayY = secondDisplay.bounds.y + yposition;
+    const thirdDisplayX = thirdDisplay.bounds.x + xposition;
+    const thirdDisplayY = thirdDisplay.bounds.y + yposition;
+
     let privateWindow = new BrowserWindow({
-        width: 250,
-        height: 100,
-        x: 0,
-        y: 0,
+        width: clockWidth,
+        height: clockHeight,
+        x: thirdDisplayX,
+        y: thirdDisplayY,
         frame: false,
         alwaysOnTop: true,
         webPreferences: {
             nodeIntegration: true,
         },
-        type: 'toolbar'
+        type: 'darwin' //'toolbar'
     });
 
     let publicWindow = new BrowserWindow({
-        width: 250,
-        height: 100,
-        x: -2691,
-        y: 48,
+        width: clockWidth,
+        height: clockHeight,
+        x: secondDisplayX,
+        y: secondDisplayY,
         frame: false,
         alwaysOnTop: true,
         webPreferences: {
             nodeIntegration: true,
         },
-        type: 'toolbar'
+        type: 'darwin' //'toolbar'
     });
 
     privateWindow.loadFile(path.join(__dirname, 'private-clock.html'));
     publicWindow.loadFile(path.join(__dirname, 'public-clock.html'));
 
-    const ensureAlwaysOnTop = (window, title) => {
-        window.setAlwaysOnTop(true, 'screen-saver'); // Using 'screen-saver' level
-        window.on('focus', () => {
-            window.setAlwaysOnTop(true, 'screen-saver');
-        });
-        setInterval(() => {
-            setWindowOnTop(title);
-        }, 5000); // Check every 5 seconds
+    const bringToTop = (window) => {
+        window.setAlwaysOnTop(true);
+        window.showInactive();
     };
 
-    privateWindow.setTitle('Private Window'); // Set a unique title
-    publicWindow.setTitle('Public Window'); // Set a unique title
-
-    ensureAlwaysOnTop(privateWindow, 'Private Window');
-    ensureAlwaysOnTop(publicWindow, 'Public Window');
-
+    // Ensure the windows stay on top by bringing them to the front periodically
     setInterval(() => {
-        if (!privateWindow.isAlwaysOnTop()) {
-            privateWindow.setAlwaysOnTop(true, 'screen-saver');
-        }
-        if (!publicWindow.isAlwaysOnTop()) {
-            publicWindow.setAlwaysOnTop(true, 'screen-saver');
-        }
-    }, 500);
+        bringToTop(privateWindow);
+        bringToTop(publicWindow);
+    }, 100); // interval check in ms
 }
 
 app.whenReady().then(createWindows);

@@ -30,7 +30,7 @@ npm install -g electron
 2. Run the Electron application:
 
 ```bash
-electron autoloader.js
+electron main.js
 ```
 
 
