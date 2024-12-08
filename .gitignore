@@ -216,5 +216,6 @@ storybook-static/
 dist/
 
 # images
-.png
-*.png
+*/screenshot_1.png
+*/screenshot_0.png
+
