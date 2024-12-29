@@ -33,6 +33,8 @@ function createWindows() {
         alwaysOnTop: true,
         webPreferences: {
             nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true,
         },
         type: 'darwin' //'toolbar'
     });
@@ -46,6 +48,8 @@ function createWindows() {
         alwaysOnTop: true,
         webPreferences: {
             nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true,
         },
         type: 'darwin' //'toolbar'
     });
@@ -64,6 +68,9 @@ function createWindows() {
         bringToTop(publicWindow);
     }, 100); // interval check in ms
 }
+
+app.commandLine.appendSwitch('enable-accelerated-2d-canvas', 'true');
+app.commandLine.appendSwitch('ignore-gpu-blacklist', 'true');
 
 app.whenReady().then(createWindows);
 
