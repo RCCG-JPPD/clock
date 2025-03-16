@@ -83,3 +83,6 @@ logs/
 
 # Misc
 *.env.local
+
+
+*.png
