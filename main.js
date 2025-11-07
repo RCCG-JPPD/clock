@@ -4,10 +4,12 @@ const path = require('path');
 const clockHeight = 30 * 2;
 const clockWidth = 90 * 2;
 
+const corner = "top-left" // options: top-left top-right bottom-left bottom-right
+
 function createWindows() {
   const displays = screen.getAllDisplays();
   const privateScreenNumber = 2; // default should be 2
-  const publicScreenNumber = 0;  // default should be 1
+  const publicScreenNumber = 1;  // default should be 1
 
   const secondDisplay = displays[publicScreenNumber];
   const thirdDisplay = displays[privateScreenNumber];
